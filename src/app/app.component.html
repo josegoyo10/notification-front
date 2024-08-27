@@ -1,0 +1,22 @@
+<div class="container mt-1 pt-1">
+  <form class="row g-3">
+
+   <div class="col-md-4">
+    <label for="inputState" class="form-label">Categories:</label>
+    <select id="inputState" class="form-select" (change)="getValue($event)">
+      <option selected>Choose...</option>
+      <option *ngFor="let item of dataCombo" [value]="item.id">
+        {{  item.name }}
+      </option>
+    </select>
+  </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+  </form>
+</div>
