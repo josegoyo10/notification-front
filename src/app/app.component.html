@@ -1,22 +1,59 @@
 <div class="container mt-1 pt-1">
-  <form class="row g-3">
+  <form class="row g-3" [formGroup]="form" (keydown.enter)="$event.preventDefault()">
 
-   <div class="col-md-4">
-    <label for="inputState" class="form-label">Categories:</label>
-    <select id="inputState" class="form-select" (change)="getValue($event)">
-      <option selected>Choose...</option>
-      <option *ngFor="let item of dataCombo" [value]="item.id">
-        {{  item.name }}
-      </option>
-    </select>
-  </div>
+    <div class="col-md-4">
+      <label for="inputState" class="form-label">Categories:</label>
+      <select id="inputState" class="form-select" (change)="getValue($event)" formControlName="category" #category
+        [ngClass]="{'is-invalid': submitted && f['category'].errors}">
+        <option selected>Choose...</option>
+        <option *ngFor="let item of dataCombo" [value]="item.id">
+          {{ item.name }}
+        </option>
+      </select>
+      <span *ngIf="submitted && f['category'].errors" class="errors">
+        <span *ngIf="f['category'].errors['required']" style="color: red; font-size: 12px;">
+          Category is required.
+        </span>
+      </span>
+    </div>
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #text_message
+        formControlName="text_message"></textarea>
+      <span *ngIf="submitted && f['text_message'].errors" class="errors">
+        <span *ngIf="f['text_message'].errors['required']" style="color: red; font-size: 12px;">
+          Message is required.
+        </span>
+      </span>
     </div>
 
     <div class="col-12">
-      <button type="submit" class="btn btn-primary">Sign in</button>
+      <button type="submit" class="btn btn-primary" (click)="onAddMessage()">Send</button>
     </div>
   </form>
+  <hr>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Message</th>
+        <th scope="col">Channel</th>
+        <th scope="col">Date</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dataNotification">
+        <th scope="row">{{ item.id }}</th>
+        <th scope="row">{{ item.name }}</th>
+        <th scope="row">{{ item.category }}</th>
+        <th scope="row">{{ item.body }}</th>
+        <th scope="row">{{ item.channel }}</th>
+        <th scope="row">{{ item.sent_at }}</th>
+
+      </tr>
+    </tbody>
+  </table>
 </div>
